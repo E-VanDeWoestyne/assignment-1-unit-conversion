@@ -2,7 +2,7 @@ import React from "react";
 
 const CreateConverter = (fromUnit, toUnit) => {
   const conversions = {
-    kgToLB: (kg) => kg * 2.20462,
+    kgToLb: (kg) => kg * 2.20462,
     lbToKg: (lb) => lb / 2.20462,
     kmToMi: (km) => km * 0.621371,
     miToKm: (mi) => mi / 0.621371,

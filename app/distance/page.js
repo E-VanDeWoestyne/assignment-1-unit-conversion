@@ -1,6 +1,47 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import CreateConverter from "@/components/CreateConverter";
+
+const parseInput = (input) => {
+  if (input.includes(",")) {
+    return input.split(",").map((value) => parseFloat(value.trim()));
+  }
+  const singleValue = parseFloat(input.trim());
+  return isNaN(singleValue) ? "" : singleValue;
+};
 
 const Distance = () => {
+  const [kmInput, setKmInput] = useState("");
+  const [miInput, setMiInput] = useState("");
+  const [kmToMiResult, setKmToMiResult] = useState("");
+  const [miToKmResult, setMiToKmResult] = useState("");
+
+  const convertKmToMi = () => {
+    const parsedInput = parseInput(kmInput);
+    if (parsedInput !== "") {
+      const converter = CreateConverter("km", "Mi");
+      const result = converter(parsedInput);
+      setKmToMiResult(
+        Array.isArray(result)
+          ? result.map((r) => r.toFixed(2)).join(", ")
+          : result.toFixed(2)
+      );
+    }
+  };
+
+  const convertMiToKm = () => {
+    const parsedInput = parseInput(miInput);
+    if (parsedInput !== "") {
+      const converter = CreateConverter("mi", "Km");
+      const result = converter(parsedInput);
+      setMiToKmResult(
+        Array.isArray(result)
+          ? result.map((r) => r.toFixed(2)).join(", ")
+          : result.toFixed(2)
+      );
+    }
+  };
+
   return (
     <div>
       <section id="distance" className="m-8">
@@ -12,21 +53,22 @@ const Distance = () => {
           <label className="text-gray-700 text-lg mb-2">Kilometers:</label>
           <div className="flex items-center gap-2 mb-4">
             <input
-              id="kmInput"
               type="text"
+              value={kmInput}
+              onChange={(e) => setKmInput(e.target.value)}
               placeholder="Enter distance in km"
               className="w-full p-2 border border-gray-300 rounded"
             />
             <button
-              id="kmToMilesButton"
               type="button"
+              onClick={convertKmToMi}
               className="px-5 bg-sky-400 text-white p-2 rounded hover:bg-sky-600"
             >
               Convert to Miles
             </button>
             <input
-              id="kmToMilesResult"
               type="text"
+              value={kmToMiResult}
               placeholder="Result"
               className="w-full p-2 border border-gray-300 rounded text-center"
               readOnly
@@ -36,21 +78,22 @@ const Distance = () => {
           <label className="text-gray-700 text-lg mb-2">Miles:</label>
           <div className="flex items-center gap-2">
             <input
-              id="milesInput"
               type="text"
+              value={miInput}
+              onChange={(e) => setMiInput(e.target.value)}
               placeholder="Enter distance in miles"
               className="w-full p-2 border border-gray-300 rounded"
             />
             <button
-              id="milesToKmButton"
               type="button"
+              onClick={convertMiToKm}
               className="px-5 bg-sky-400 text-white p-2 rounded hover:bg-sky-600"
             >
               Convert to Kilometers
             </button>
             <input
-              id="milesToKmResult"
               type="text"
+              value={miToKmResult}
               placeholder="Result"
               className="w-full p-2 border border-gray-300 rounded text-center"
               readOnly

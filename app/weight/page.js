@@ -19,7 +19,7 @@ const Weight = () => {
   const convertKgToLb = () => {
     const parsedInput = parseInput(kgInput);
     if (parsedInput !== "") {
-      const converter = CreateConverter("kg", "LB");
+      const converter = CreateConverter("kg", "Lb");
       const result = converter(parsedInput);
       setKgToLbResult(
         Array.isArray(result)
@@ -41,6 +41,7 @@ const Weight = () => {
       );
     }
   };
+
   return (
     <div>
       <section id="weight" className="m-8">
