@@ -1,6 +1,46 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import CreateConverter from "@/components/CreateConverter";
+
+const parseInput = (input) => {
+  if (input.includes(",")) {
+    return input.split(",").map((value) => parseFloat(value.trim()));
+  }
+  const singleValue = parseFloat(input.trim());
+  return isNaN(singleValue) ? "" : singleValue;
+};
 
 const Weight = () => {
+  const [kgInput, setKgInput] = useState("");
+  const [lbInput, setLbInput] = useState("");
+  const [kgToLbResult, setKgToLbResult] = useState("");
+  const [lbToKgResult, setLbToKgResult] = useState("");
+
+  const convertKgToLb = () => {
+    const parsedInput = parseInput(kgInput);
+    if (parsedInput !== "") {
+      const converter = CreateConverter("kg", "LB");
+      const result = converter(parsedInput);
+      setKgToLbResult(
+        Array.isArray(result)
+          ? result.map((r) => r.toFixed(2)).join(", ")
+          : result.toFixed(2)
+      );
+    }
+  };
+
+  const convertLbToKg = () => {
+    const parsedInput = parseInput(lbInput);
+    if (parsedInput !== "") {
+      const converter = CreateConverter("lb", "Kg");
+      const result = converter(parsedInput);
+      setLbToKgResult(
+        Array.isArray(result)
+          ? result.map((r) => r.toFixed(2)).join(", ")
+          : result.toFixed(2)
+      );
+    }
+  };
   return (
     <div>
       <section id="weight" className="m-8">
@@ -12,21 +52,22 @@ const Weight = () => {
           <label className="text-gray-700 text-lg mb-2">Kilograms:</label>
           <div className="flex items-center gap-2 mb-4">
             <input
-              id="kgInput"
               type="text"
+              value={kgInput}
+              onChange={(e) => setKgInput(e.target.value)}
               placeholder="Enter weight in kg"
               className="w-full p-2 border border-gray-300 rounded"
             />
             <button
-              id="kgToLbButton"
               type="button"
+              onClick={convertKgToLb}
               className="px-5 bg-sky-400 text-white p-2 rounded hover:bg-sky-600"
             >
               Convert to Pounds
             </button>
             <input
-              id="kgToLbResult"
               type="text"
+              value={kgToLbResult}
               placeholder="Result"
               className="w-full p-2 border border-gray-300 rounded text-center"
               readOnly
@@ -36,21 +77,22 @@ const Weight = () => {
           <label className="text-gray-700 text-lg mb-2">Pounds:</label>
           <div className="flex items-center gap-2">
             <input
-              id="lbInput"
               type="text"
+              value={lbInput}
+              onChange={(e) => setLbInput(e.target.value)}
               placeholder="Enter weight in lbs"
               className="w-full p-2 border border-gray-300 rounded"
             />
             <button
-              id="lbToKgButton"
               type="button"
+              onClick={convertLbToKg}
               className="px-5 bg-sky-400 text-white p-2 rounded hover:bg-sky-600"
             >
               Convert to Kilograms
             </button>
             <input
-              id="lbToKgResult"
               type="text"
+              value={lbToKgResult}
               placeholder="Result"
               className="w-full p-2 border border-gray-300 rounded text-center"
               readOnly
