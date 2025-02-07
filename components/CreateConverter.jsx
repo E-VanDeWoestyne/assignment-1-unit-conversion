@@ -1,4 +1,6 @@
-import React from "react";
+// Created 05-02-25
+// Component to allow individual webpages to create a unit
+// converter by providing the unit to convert to and from.
 
 const CreateConverter = (fromUnit, toUnit) => {
   const conversions = {

@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+// Created 04-02-25
+// Provides the header navigational bar at the top of every page to allow
+// the user to navigate between the different unit conversion pages.
+
 const NavBar = () => {
   return (
     <div>

@@ -2,6 +2,14 @@
 import React, { useState } from "react";
 import CreateConverter from "@/components/CreateConverter";
 
+// Created 05-02-25
+// Weight Conversion webpage
+// Provides two input boxes for user to enter value of either kilograms or pounds
+// Provides a button for each input to take user value and convert to other weight.
+// Opposite input boxes, displays the converted unit if button has been pressed.
+//
+// Can do multiple values if seperated by a comma.
+
 const parseInput = (input) => {
   if (input.includes(",")) {
     return input.split(",").map((value) => parseFloat(value.trim()));
